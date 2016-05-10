@@ -1,0 +1,85 @@
+﻿<div data-bind="enabled: isLoaded, css: panelStyle ">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-lg-6">
+                    <label>Download: </label>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        CSV <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" data-bind="click:csvCurrentPage">Current Page</a></li>
+                        <li><a href="#" data-bind="click:csvCurrentSearch">Current Search(All Pages)</a></li>
+                        <li><a href="#" data-bind="click:csvAllData">All Data</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2" style="text-align: right; vertical-align: bottom;"><label>Items Per Page:</label></div>
+            <div class="col-lg-4">
+                <select class="form-control" data-bind="options: itemsPerPageList, value: itemsPerPage, event:{change:updateData}"></select>
+            </div>
+
+        </div>
+    </div>
+    <div class="panel-body" style="padding: 0px; overflow-x: scroll">
+
+        <div data-bind="visible: !isLoaded()" style="text-align: center">
+            <p>Loading...</p>
+        </div>
+
+        <table data-bind="visible: isLoaded, css: tableStyle">
+            <thead data-bind="css: theadStyle">
+            <tr data-bind="css: trStyle, foreach:columns">
+                <th style="white-space: nowrap" data-bind="style:{cursor: calculated() ? 'not-allowed': 'pointer' }, click: headerClick, css: $parent.thStyle">
+                    <span data-bind="text: name"></span>
+                    <span data-bind="visible: sortedAZ" class="glyphicon glyphicon-sort-by-alphabet"></span>
+                    <span data-bind="visible: sortedZA" class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
+                    <span data-bind="visible: calculated" style="cursor: help" class="glyphicon glyphicon-cog" title="this column is computed, computed columns cannot be sorted"></span>
+                </th>
+            </tr>
+            </thead>
+            <tbody data-bind="css: thStyle, foreach: { data: rows, as: 'row' } ">
+            <tr data-bind="css: $parent.trStyle, foreach: { data: $parent.columns, as: 'column' }">
+                <!-- ko if: column.isText -->
+                <td style="white-space: nowrap;" data-bind="css: $parents[1].tdStyle, text: row[column.name()]"></td>
+                <!-- /ko -->
+                <!-- ko if: column.isButton -->
+                <td data-bind="css: $parents[1].tdStyle">
+                    <button data-bind="click: function(){ customAction(row);}, text: name, css: $parents[1].buttonStyle"></button>
+                </td>
+                <!-- /ko -->
+                <!-- ko if: column.isCombo -->
+                <td data-bind="css: $parents[1].tdStyle">
+                    <form>
+                    <select class="form-control" data-bind="options: column.comboItems,
+                       optionsText: function(item){
+                            return item[column.comboValue()]
+                            },
+                       value: row[column.name()],
+                       optionsCaption: '...'"></select></form>
+                </td>
+                <!-- /ko -->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col-lg-6"></div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button data-bind="enable:canGoToPreviousPage, click: goToPreviousPage" class="btn btn-default" type="button">Prev</button>
+                    </div>
+                    <span class="input-group-addon" id="sizing-addon1">Page #</span>
+                    <input type="text" class="form-control" data-bind="value: pageNumber, event:{change:updateData}">
+                    <span class="input-group-addon" id="sizing-addon1">of</span>
+                    <input type="text" class="form-control" disabled="disabled"  data-bind="value: totalPages">
+                    <div class="input-group-btn">
+                        <button data-bind="enable:canGoToNextPage, click: goToNextPage" class="btn btn-default" type="button">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

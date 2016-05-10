@@ -1,0 +1,1 @@
+define(['async', 'require','jquery', 'bootstrap', 'knockout', 'mapping'], function (async, require, $, bs, ko, map) {

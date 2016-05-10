@@ -1,0 +1,32 @@
+{
+  "name": "knockout-table",
+  "version": "1.0.0",
+  "description": "ko-table",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ApGasAndElectric/knockout-table.git"
+  },
+  "keywords": [
+    "knockout",
+    "table",
+    "grid",
+    "datagrid"
+  ],
+  "author": "jonathan arnold",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ApGasAndElectric/knockout-table/issues"
+  },
+  "homepage": "https://github.com/ApGasAndElectric/knockout-table",
+  "dependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jade": "^1.0.0",
+    "grunt-contrib-pug": "^1.0.0"
+  }
+}
